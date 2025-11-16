@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth, useRequireAuth } from "@/lib/auth-context";
-import { User, getActivePromos, Promo, Entry } from "@/lib/db";
+import { User, Promo, Entry } from "@/lib/db";
 import Navbar from "@/components/Navbar";
 import MembershipCard from "@/components/MembershipCard";
 import QRGenerator from "@/components/QRGenerator";
@@ -88,8 +88,15 @@ export default function DashboardPage() {
 
   const fetchPromos = async () => {
     try {
-      const activePromos = await getActivePromos();
-      setPromos(activePromos);
+      const response = await fetch("/api/promos");
+      const data = await response.json();
+      
+      if (data.promos) {
+        setPromos(data.promos.map((promo: any) => ({
+          ...promo,
+          createdAt: new Date(promo.createdAt),
+        })));
+      }
     } catch (error) {
       console.error("Error fetching promos:", error);
     }

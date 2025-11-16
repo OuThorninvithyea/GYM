@@ -82,3 +82,35 @@ export async function getUserByIdAdmin(uid: string): Promise<User | null> {
     return null;
   }
 }
+
+// Entry operations
+export interface Entry {
+  id?: string;
+  userId: string;
+  userName: string;
+  location: string;
+  timestamp: Date;
+  checkoutTime?: Date;
+  duration?: number;
+  staffId?: string;
+}
+
+export async function getUserEntriesAdmin(userId: string): Promise<Entry[]> {
+  try {
+    const entriesSnapshot = await adminDb
+      .collection("entries")
+      .where("userId", "==", userId)
+      .orderBy("timestamp", "desc")
+      .get();
+    
+    return entriesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate(),
+      checkoutTime: doc.data().checkoutTime?.toDate(),
+    })) as Entry[];
+  } catch (error) {
+    console.error("Error getting user entries (admin):", error);
+    return [];
+  }
+}

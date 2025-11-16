@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserEntries } from "@/lib/db";
+import { getUserEntriesAdmin } from "@/lib/db-admin";
 
 export async function GET(request: NextRequest) {
   try {
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const entries = await getUserEntries(userId);
+    const entries = await getUserEntriesAdmin(userId);
 
     return NextResponse.json({ entries, success: true });
   } catch (error: unknown) {
