@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { updateUser, createPayment } from "@/lib/db";
+import { updateUserAdmin, createPaymentAdmin } from "@/lib/db-admin";
 import { getPlanDuration } from "@/lib/stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         const newExpiryDate = new Date();
         newExpiryDate.setDate(newExpiryDate.getDate() + duration);
 
-        await updateUser(userId, {
+        await updateUserAdmin(userId, {
           expiryDate: newExpiryDate,
           isActive: true,
           membershipPlan: plan as any,
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
         });
 
         // Record payment
-        await createPayment({
+        await createPaymentAdmin({
           userId,
           userName: userName || "Unknown",
           amount: (session.amount_total || 0) / 100,
