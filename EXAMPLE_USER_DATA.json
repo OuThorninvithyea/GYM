@@ -1,0 +1,179 @@
+{
+  "user": {
+    "uid": "REPLACE_WITH_ACTUAL_UID",
+    "name": "Vithyeas",
+    "email": "vitihyeass@gmail.com",
+    "phone": "+85512345678",
+    "joinDate": "2024-08-15T08:00:00Z",
+    "expiryDate": "2025-08-15T23:59:59Z",
+    "membershipPlan": "12-month",
+    "qrId": "ELIT-VIT-2024-001",
+    "stripeCustomerId": "cus_example123",
+    "isActive": true,
+    "location": "Phnom Penh - Central",
+    "role": "member"
+  },
+  "entries": [
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-16T06:30:00Z",
+      "checkoutTime": "2024-11-16T08:15:00Z",
+      "duration": 105,
+      "staffId": "staff_001"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-15T17:00:00Z",
+      "checkoutTime": "2024-11-15T18:45:00Z",
+      "duration": 105,
+      "staffId": "staff_002"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-14T06:15:00Z",
+      "checkoutTime": "2024-11-14T07:30:00Z",
+      "duration": 75,
+      "staffId": "staff_001"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-13T18:00:00Z",
+      "checkoutTime": "2024-11-13T19:30:00Z",
+      "duration": 90,
+      "staffId": "staff_003"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-12T06:45:00Z",
+      "checkoutTime": "2024-11-12T08:00:00Z",
+      "duration": 75,
+      "staffId": "staff_001"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Riverside",
+      "timestamp": "2024-11-11T17:30:00Z",
+      "checkoutTime": "2024-11-11T19:00:00Z",
+      "duration": 90,
+      "staffId": "staff_004"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-09T07:00:00Z",
+      "checkoutTime": "2024-11-09T08:30:00Z",
+      "duration": 90,
+      "staffId": "staff_001"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-08T18:15:00Z",
+      "checkoutTime": "2024-11-08T20:00:00Z",
+      "duration": 105,
+      "staffId": "staff_002"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-07T06:30:00Z",
+      "checkoutTime": "2024-11-07T07:45:00Z",
+      "duration": 75,
+      "staffId": "staff_001"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-06T17:00:00Z",
+      "checkoutTime": "2024-11-06T18:15:00Z",
+      "duration": 75,
+      "staffId": "staff_003"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-05T06:00:00Z",
+      "checkoutTime": "2024-11-05T07:30:00Z",
+      "duration": 90,
+      "staffId": "staff_001"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-04T18:30:00Z",
+      "checkoutTime": "2024-11-04T20:00:00Z",
+      "duration": 90,
+      "staffId": "staff_002"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Siem Reap - Main",
+      "timestamp": "2024-11-02T08:00:00Z",
+      "checkoutTime": "2024-11-02T09:45:00Z",
+      "duration": 105,
+      "staffId": "staff_005"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-11-01T06:15:00Z",
+      "checkoutTime": "2024-11-01T07:30:00Z",
+      "duration": 75,
+      "staffId": "staff_001"
+    },
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "location": "Phnom Penh - Central",
+      "timestamp": "2024-10-31T17:45:00Z",
+      "checkoutTime": "2024-10-31T19:00:00Z",
+      "duration": 75,
+      "staffId": "staff_003"
+    }
+  ],
+  "payments": [
+    {
+      "userId": "REPLACE_WITH_ACTUAL_UID",
+      "userName": "Vithyeas",
+      "amount": 306,
+      "date": "2024-08-15T10:30:00Z",
+      "status": "completed",
+      "stripeId": "pi_example_12month",
+      "plan": "12-month",
+      "description": "12 Month + 1 FREE Membership"
+    }
+  ],
+  "statistics": {
+    "totalVisits": 15,
+    "averageSessionDuration": 88,
+    "totalWorkoutTime": 1320,
+    "memberSince": "2024-08-15",
+    "daysAsMember": 93,
+    "planDuration": 365,
+    "daysRemaining": 272,
+    "percentageUsed": 25.5,
+    "favoriteLocation": "Phnom Penh - Central",
+    "mostActiveDay": "Saturday",
+    "averageVisitsPerWeek": 3.5
+  }
+}
+
