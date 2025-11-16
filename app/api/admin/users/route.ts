@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAllUsers } from "@/lib/db";
+import { getAllUsersAdmin } from "@/lib/db-admin";
 
 export async function GET(request: NextRequest) {
   try {
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     // }
 
-    const users = await getAllUsers();
+    const users = await getAllUsersAdmin();
 
     return NextResponse.json({
       success: true,

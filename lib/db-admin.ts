@@ -102,7 +102,7 @@ export async function getUserEntriesAdmin(userId: string): Promise<Entry[]> {
       .where("userId", "==", userId)
       .orderBy("timestamp", "desc")
       .get();
-    
+
     return entriesSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -113,4 +113,99 @@ export async function getUserEntriesAdmin(userId: string): Promise<Entry[]> {
     console.error("Error getting user entries (admin):", error);
     return [];
   }
+}
+
+// Create user (Admin SDK)
+export async function createUserAdmin(
+  userData: Omit<User, "uid">
+): Promise<string> {
+  try {
+    const userRef = adminDb.collection("users").doc(userData.qrId);
+    await userRef.set({
+      ...userData,
+      joinDate: Timestamp.fromDate(userData.joinDate),
+      expiryDate: Timestamp.fromDate(userData.expiryDate),
+      createdAt: Timestamp.now(),
+    });
+    return userData.qrId;
+  } catch (error) {
+    console.error("Error creating user (admin):", error);
+    throw error;
+  }
+}
+
+// Get all users (Admin SDK)
+export async function getAllUsersAdmin(): Promise<User[]> {
+  try {
+    const querySnapshot = await adminDb.collection("users").get();
+    return querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        uid: doc.id,
+        ...data,
+        joinDate: data.joinDate?.toDate(),
+        expiryDate: data.expiryDate?.toDate(),
+      } as User;
+    });
+  } catch (error) {
+    console.error("Error getting all users (admin):", error);
+    return [];
+  }
+}
+
+// Get recent entries (Admin SDK)
+export async function getRecentEntriesAdmin(
+  limitCount: number = 50
+): Promise<Entry[]> {
+  try {
+    const entriesSnapshot = await adminDb
+      .collection("entries")
+      .orderBy("timestamp", "desc")
+      .limit(limitCount)
+      .get();
+
+    return entriesSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+      timestamp: doc.data().timestamp?.toDate(),
+      checkoutTime: doc.data().checkoutTime?.toDate(),
+    })) as Entry[];
+  } catch (error) {
+    console.error("Error getting recent entries (admin):", error);
+    return [];
+  }
+}
+
+// Create entry (Admin SDK)
+export async function createEntryAdmin(
+  entryData: Omit<Entry, "id">
+): Promise<string> {
+  try {
+    const docRef = await adminDb.collection("entries").add({
+      ...entryData,
+      timestamp: Timestamp.fromDate(entryData.timestamp),
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error("Error creating entry (admin):", error);
+    throw error;
+  }
+}
+
+// Helper functions
+export function getMembershipStatus(
+  user: User
+): "active" | "expiring" | "expired" {
+  const daysLeft = getDaysUntilExpiry(user.expiryDate);
+  if (daysLeft < 0) return "expired";
+  if (daysLeft <= 7) return "expiring";
+  return "active";
+}
+
+export function getDaysUntilExpiry(expiryDate: Date): number {
+  const now = new Date();
+  const expiry = new Date(expiryDate);
+  const diffTime = expiry.getTime() - now.getTime();
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
 }

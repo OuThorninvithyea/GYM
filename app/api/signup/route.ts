@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createUser } from "@/lib/db";
+import { createUserAdmin } from "@/lib/db-admin";
 import { getPlanDuration } from "@/lib/stripe";
 
 export async function POST(request: NextRequest) {
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     const expiryDate = new Date(joinDate);
     expiryDate.setDate(expiryDate.getDate() + duration);
 
-    const userId = await createUser({
+    const userId = await createUserAdmin({
       phone,
       name,
       email,

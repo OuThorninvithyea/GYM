@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRecentEntries } from "@/lib/db";
+import { getRecentEntriesAdmin } from "@/lib/db-admin";
 
 export async function GET(request: NextRequest) {
   try {
     // TODO: Add admin authentication check here
 
-    const entries = await getRecentEntries(100);
+    const entries = await getRecentEntriesAdmin(100);
 
     return NextResponse.json({
       success: true,

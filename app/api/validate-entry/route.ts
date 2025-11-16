@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import {
-  getUserById,
-  createEntry,
+  getUserByIdAdmin,
+  createEntryAdmin,
   getMembershipStatus,
   getDaysUntilExpiry,
-} from "@/lib/db";
+} from "@/lib/db-admin";
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get user by QR ID
-    const user = await getUserById(qrId);
+    const user = await getUserByIdAdmin(qrId);
 
     if (!user) {
       return NextResponse.json({
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Log the entry
-    await createEntry({
+    await createEntryAdmin({
       userId: user.uid,
       userName: user.name,
       location,
