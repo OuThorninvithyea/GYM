@@ -119,7 +119,11 @@ export default function SignupPage() {
       toast.success("Account created! Redirecting to payment...");
 
       // Redirect to checkout
-      router.push(`/checkout?userId=${data.userId}&plan=${formData.plan}`);
+      router.push(
+        `/checkout?userId=${data.userId}&userName=${encodeURIComponent(
+          data.userName
+        )}&plan=${formData.plan}`
+      );
     } catch (error: any) {
       console.error("Signup error:", error);
       toast.error(error.message || "Failed to create account");

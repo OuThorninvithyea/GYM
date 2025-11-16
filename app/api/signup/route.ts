@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       userId,
+      userName: name,
       message: "Account created successfully",
     });
   } catch (error: any) {

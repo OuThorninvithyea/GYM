@@ -97,6 +97,7 @@ You need to copy these **3 specific values**:
 ```
 
 **Important Notes:**
+
 - ✅ Keep the `\n` as literal characters (don't replace them with actual line breaks)
 - ✅ Include `-----BEGIN PRIVATE KEY-----` at the start
 - ✅ Include `-----END PRIVATE KEY-----` at the end
@@ -104,6 +105,7 @@ You need to copy these **3 specific values**:
 - ✅ Don't add extra spaces or line breaks
 
 **Example of correct format:**
+
 ```
 -----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7qil0Fq41zgyr\nP8m4O88oA5OooaV+5qFzJEeD8NH6W0pUojQHNfjnWv/AxJ2KQFD3gddTgGXSKjHI\n...(more lines)...\nYNFHlqWTHnVdrIBQmu4yH7YfhsEQTkBCd3Qz7WBXCQm/r6qBMmX8cz+ccDv8E9pw\n-----END PRIVATE KEY-----\n
 ```
@@ -122,6 +124,7 @@ You need to copy these **3 specific values**:
 3. ✅ `FIREBASE_ADMIN_PRIVATE_KEY`
 
 Plus your existing variables:
+
 - ✅ `NEXT_PUBLIC_FIREBASE_API_KEY`
 - ✅ `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
 - ✅ `NEXT_PUBLIC_FIREBASE_PROJECT_ID`
@@ -156,6 +159,7 @@ Check these common issues:
 ### Check Vercel Logs
 
 After redeploying, check the build logs:
+
 - Look for: `"Firebase Admin initialized successfully"` ✅
 - If you see: `"Missing Firebase Admin credentials"` ❌ - check which variable is missing
 
@@ -178,6 +182,7 @@ FIREBASE_ADMIN_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_KEY_HERE\n-----END
 ## ✅ Success!
 
 Once set up correctly:
+
 - ✅ Build will complete successfully
 - ✅ All API routes will work
 - ✅ Payment processing will function
@@ -185,4 +190,3 @@ Once set up correctly:
 - ✅ Admin features will be accessible
 
 Need help? Check the Vercel logs for specific error messages.
-
