@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import { CheckCircle, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function SuccessPage() {
-  const searchParams = useSearchParams();
   const router = useRouter();
   const [countdown, setCountdown] = useState(5);
 
