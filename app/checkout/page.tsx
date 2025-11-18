@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import LoadingSpinner from "@/components/LoadingSpinner";
@@ -40,7 +40,7 @@ const PLAN_INFO: Record<"1-month" | "6-month" | "12-month", PlanDetails> = {
   },
 };
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
@@ -222,5 +222,13 @@ export default function CheckoutPage() {
         </motion.div>
       </div>
     </div>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<LoadingSpinner message="Loading checkout..." />}>
+      <CheckoutContent />
+    </Suspense>
   );
 }
