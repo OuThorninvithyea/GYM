@@ -13,7 +13,14 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 );
 
-const PLAN_INFO = {
+type PlanDetails = {
+  name: string;
+  price: string;
+  duration: string;
+  badge?: string;
+};
+
+const PLAN_INFO: Record<"1-month" | "6-month" | "12-month", PlanDetails> = {
   "1-month": {
     name: "1 Month Membership",
     price: "$30",
