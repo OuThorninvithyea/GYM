@@ -3,24 +3,46 @@ import * as admin from "firebase-admin";
 // Initialize Firebase Admin SDK (server-side only)
 if (!admin.apps.length) {
   try {
-    const privateKey = process.env.FIREBASE_ADMIN_PRIVATE_KEY;
+    const rawPrivateKey = process.env.FIREBASE_ADMIN_PRIVATE_KEY;
     const projectId = process.env.FIREBASE_ADMIN_PROJECT_ID;
     const clientEmail = process.env.FIREBASE_ADMIN_CLIENT_EMAIL;
 
-    if (!privateKey || !projectId || !clientEmail) {
+    if (!rawPrivateKey || !projectId || !clientEmail) {
       console.error("Missing Firebase Admin credentials:", {
-        hasPrivateKey: !!privateKey,
+        hasPrivateKey: !!rawPrivateKey,
         hasProjectId: !!projectId,
         hasClientEmail: !!clientEmail,
       });
       throw new Error("Firebase Admin credentials not configured");
     }
 
+    let privateKey = rawPrivateKey.trim();
+
+    // Remove wrapping quotes if present
+    if (
+      (privateKey.startsWith('"') && privateKey.endsWith('"')) ||
+      (privateKey.startsWith("'") && privateKey.endsWith("'"))
+    ) {
+      privateKey = privateKey.slice(1, -1);
+    }
+
+    // Convert escaped newlines
+    privateKey = privateKey.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n");
+
+    // If the key is base64-encoded (no BEGIN header), decode it
+    if (!privateKey.includes("BEGIN") && /^[A-Za-z0-9+/=]+$/.test(privateKey)) {
+      try {
+        privateKey = Buffer.from(privateKey, "base64").toString("utf8");
+      } catch (err) {
+        console.warn("Failed to decode base64 private key, using raw value");
+      }
+    }
+
     admin.initializeApp({
       credential: admin.credential.cert({
         projectId,
         clientEmail,
-        privateKey: privateKey.replace(/\\n/g, "\n"),
+        privateKey,
       }),
     });
 
