@@ -11,8 +11,22 @@ import {
   Shield,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { useAuth } from "@/lib/auth-context";
 
 export default function Home() {
+  const { user } = useAuth();
+
+  const getUserDisplayName = () => user?.displayName || user?.email || "Member";
+
+  const buildPlanUrl = (planId: "1-month" | "6-month" | "12-month") => {
+    if (!user) {
+      return `/signup?plan=${planId}`;
+    }
+    return `/checkout?userId=${user.uid}&userName=${encodeURIComponent(
+      getUserDisplayName()
+    )}&plan=${planId}`;
+  };
+
   const features = [
     {
       icon: QrCode,
@@ -77,7 +91,10 @@ export default function Home() {
               check-in, easy renewals, 20 locations nationwide.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/signup" className="btn-primary text-lg px-8 py-4">
+              <Link
+                href={buildPlanUrl("1-month")}
+                className="btn-primary text-lg px-8 py-4"
+              >
                 Join Now - $30/month
               </Link>
               <Link href="/login" className="btn-outline text-lg px-8 py-4">
@@ -148,12 +165,14 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
+                id: "1-month" as const,
                 name: "1 Month",
                 price: "$30",
                 period: "month",
                 discount: null,
               },
               {
+                id: "6-month" as const,
                 name: "6 Months",
                 price: "$162",
                 period: "6 months",
@@ -161,6 +180,7 @@ export default function Home() {
                 popular: true,
               },
               {
+                id: "12-month" as const,
                 name: "12 Months",
                 price: "$306",
                 period: "year",
@@ -197,7 +217,7 @@ export default function Home() {
                     <span className="text-gray-400 ml-2">/ {plan.period}</span>
                   </div>
                   <Link
-                    href="/signup"
+                    href={buildPlanUrl(plan.id)}
                     className={`block w-full py-3 rounded-lg font-semibold ${
                       plan.popular ? "btn-primary" : "btn-outline"
                     }`}
@@ -226,7 +246,7 @@ export default function Home() {
               Join thousands of satisfied members across Cambodia
             </p>
             <Link
-              href="/signup"
+              href={buildPlanUrl("1-month")}
               className="btn-primary text-lg px-10 py-4 inline-block"
             >
               Join Elit Gym Today
