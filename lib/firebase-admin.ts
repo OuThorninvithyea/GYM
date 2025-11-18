@@ -29,13 +29,24 @@ if (!admin.apps.length) {
     // Convert escaped newlines
     privateKey = privateKey.replace(/\\r\\n/g, "\n").replace(/\\n/g, "\n");
 
-    // If the key is base64-encoded (no BEGIN header), decode it
-    if (!privateKey.includes("BEGIN") && /^[A-Za-z0-9+/=]+$/.test(privateKey)) {
+    const maybeBase64 = privateKey.replace(/\s+/g, "");
+
+    // If the key still doesn't contain a PEM header, try decoding base64
+    if (
+      !privateKey.includes("BEGIN") &&
+      /^[A-Za-z0-9+/=]+$/.test(maybeBase64)
+    ) {
       try {
-        privateKey = Buffer.from(privateKey, "base64").toString("utf8");
+        privateKey = Buffer.from(maybeBase64, "base64").toString("utf8");
       } catch (err) {
         console.warn("Failed to decode base64 private key, using raw value");
       }
+    }
+
+    privateKey = privateKey.trim();
+
+    if (!privateKey.includes("BEGIN PRIVATE KEY")) {
+      throw new Error("Firebase Admin private key is not in PEM format");
     }
 
     admin.initializeApp({
