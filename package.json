@@ -11,6 +11,8 @@
     "create:admin": "ts-node scripts/create-admin.ts"
   },
   "dependencies": {
+    "@dataconnect/admin-generated": "file:src/dataconnect-admin-generated",
+    "@dataconnect/generated": "file:src/dataconnect-generated",
     "@stripe/stripe-js": "^2.2.0",
     "@tanstack/react-table": "^8.11.2",
     "@vercel/analytics": "^1.5.0",
