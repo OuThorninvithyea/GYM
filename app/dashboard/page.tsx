@@ -77,7 +77,11 @@ export default function DashboardPage() {
 
   const buildUserQueryParams = () => {
     const params = new URLSearchParams();
-    if (authUser?.uid) params.set("uid", authUser.uid);
+    if (userData?.qrId) {
+      params.set("uid", userData.qrId);
+    } else if (authUser?.uid) {
+      params.set("uid", authUser.uid);
+    }
     if (authUser?.phoneNumber) params.set("phone", authUser.phoneNumber);
     if (authUser?.email) params.set("email", authUser.email);
     return params.toString();

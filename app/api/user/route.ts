@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
 
     let user = null;
 
-    if (uid && /^ELIT-/i.test(uid)) {
+    if (uid) {
       user = await getUserByIdAdmin(uid);
     }
 
