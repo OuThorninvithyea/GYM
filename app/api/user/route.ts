@@ -1,16 +1,37 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUserByIdAdmin } from "@/lib/db-admin";
+import {
+  getUserByIdAdmin,
+  getUserByPhoneAdmin,
+  getUserByEmailAdmin,
+} from "@/lib/db-admin";
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const uid = searchParams.get("uid");
+    const phone = searchParams.get("phone");
+    const email = searchParams.get("email");
 
-    if (!uid) {
-      return NextResponse.json({ error: "User ID required" }, { status: 400 });
+    if (!uid && !phone && !email) {
+      return NextResponse.json(
+        { error: "User identifier required" },
+        { status: 400 }
+      );
     }
 
-    const user = await getUserByIdAdmin(uid);
+    let user = null;
+
+    if (uid) {
+      user = await getUserByIdAdmin(uid);
+    }
+
+    if (!user && phone) {
+      user = await getUserByPhoneAdmin(phone);
+    }
+
+    if (!user && email) {
+      user = await getUserByEmailAdmin(email);
+    }
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });

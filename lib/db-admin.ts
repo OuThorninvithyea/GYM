@@ -83,6 +83,54 @@ export async function getUserByIdAdmin(uid: string): Promise<User | null> {
   }
 }
 
+export async function getUserByPhoneAdmin(phone: string): Promise<User | null> {
+  try {
+    const snapshot = await adminDb
+      .collection("users")
+      .where("phone", "==", phone)
+      .limit(1)
+      .get();
+    if (snapshot.empty) {
+      return null;
+    }
+    const doc = snapshot.docs[0];
+    const data = doc.data();
+    return {
+      uid: doc.id,
+      ...data,
+      joinDate: data?.joinDate?.toDate(),
+      expiryDate: data?.expiryDate?.toDate(),
+    } as User;
+  } catch (error) {
+    console.error("Error getting user by phone (admin):", error);
+    return null;
+  }
+}
+
+export async function getUserByEmailAdmin(email: string): Promise<User | null> {
+  try {
+    const snapshot = await adminDb
+      .collection("users")
+      .where("email", "==", email)
+      .limit(1)
+      .get();
+    if (snapshot.empty) {
+      return null;
+    }
+    const doc = snapshot.docs[0];
+    const data = doc.data();
+    return {
+      uid: doc.id,
+      ...data,
+      joinDate: data?.joinDate?.toDate(),
+      expiryDate: data?.expiryDate?.toDate(),
+    } as User;
+  } catch (error) {
+    console.error("Error getting user by email (admin):", error);
+    return null;
+  }
+}
+
 // Entry operations
 export interface Entry {
   id?: string;

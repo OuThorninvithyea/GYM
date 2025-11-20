@@ -66,18 +66,42 @@ export default function DashboardPage() {
     if (authUser) {
       fetchUserData();
       fetchPromos();
-      fetchUserEntries();
     }
   }, [authUser]);
 
+  useEffect(() => {
+    if (userData?.uid) {
+      fetchUserEntries(userData.uid);
+    }
+  }, [userData]);
+
+  const buildUserQueryParams = () => {
+    const params = new URLSearchParams();
+    if (authUser?.uid) params.set("uid", authUser.uid);
+    if (authUser?.phoneNumber) params.set("phone", authUser.phoneNumber);
+    if (authUser?.email) params.set("email", authUser.email);
+    return params.toString();
+  };
+
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`/api/user?uid=${authUser?.uid}`);
+      const query = buildUserQueryParams();
+      if (!query) {
+        toast.error("Unable to identify your membership account.");
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch(`/api/user?${query}`);
       const data = await response.json();
 
-      if (data.user) {
-        setUserData(data.user);
+      if (!response.ok || !data.user) {
+        toast.error(data.error || "Membership not found.");
+        setUserData(null);
+        return;
       }
+
+      setUserData(data.user);
     } catch (error) {
       console.error("Error fetching user data:", error);
       toast.error("Failed to load user data");
@@ -90,29 +114,35 @@ export default function DashboardPage() {
     try {
       const response = await fetch("/api/promos");
       const data = await response.json();
-      
+
       if (data.promos) {
-        setPromos(data.promos.map((promo: any) => ({
-          ...promo,
-          createdAt: new Date(promo.createdAt),
-        })));
+        setPromos(
+          data.promos.map((promo: any) => ({
+            ...promo,
+            createdAt: new Date(promo.createdAt),
+          }))
+        );
       }
     } catch (error) {
       console.error("Error fetching promos:", error);
     }
   };
 
-  const fetchUserEntries = async () => {
+  const fetchUserEntries = async (userId: string) => {
     try {
-      const response = await fetch(`/api/user/entries?userId=${authUser?.uid}`);
+      const response = await fetch(`/api/user/entries?userId=${userId}`);
       const data = await response.json();
 
       if (data.entries) {
-        setEntries(data.entries.map((entry: any) => ({
-          ...entry,
-          timestamp: new Date(entry.timestamp),
-          checkoutTime: entry.checkoutTime ? new Date(entry.checkoutTime) : undefined,
-        })));
+        setEntries(
+          data.entries.map((entry: any) => ({
+            ...entry,
+            timestamp: new Date(entry.timestamp),
+            checkoutTime: entry.checkoutTime
+              ? new Date(entry.checkoutTime)
+              : undefined,
+          }))
+        );
       }
     } catch (error) {
       console.error("Error fetching user entries:", error);
