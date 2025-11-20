@@ -50,6 +50,21 @@ const pricingPlans = [
   },
 ];
 
+const parseDate = (value: any): Date => {
+  if (!value) return new Date();
+  if (value instanceof Date) return value;
+  if (typeof value === "string" || typeof value === "number") {
+    return new Date(value);
+  }
+  if (value?.seconds) {
+    return new Date(value.seconds * 1000);
+  }
+  if (value?._seconds) {
+    return new Date(value._seconds * 1000);
+  }
+  return new Date(value);
+};
+
 export default function DashboardPage() {
   const { user: authUser, loading: authLoading } = useRequireAuth();
   const [userData, setUserData] = useState<User | null>(null);
@@ -105,7 +120,11 @@ export default function DashboardPage() {
         return;
       }
 
-      setUserData(data.user);
+      setUserData({
+        ...data.user,
+        joinDate: parseDate(data.user.joinDate),
+        expiryDate: parseDate(data.user.expiryDate),
+      });
     } catch (error) {
       console.error("Error fetching user data:", error);
       toast.error("Failed to load user data");
