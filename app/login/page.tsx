@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   signInWithPhoneNumber,
@@ -14,14 +14,24 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { formatPhoneNumber, validatePhone } from "@/lib/utils";
+import { useAuth } from "@/lib/auth-context";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function LoginPage() {
+  const { user, loading: authLoading } = useAuth();
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
   const [step, setStep] = useState<"phone" | "otp">("phone");
   const [loading, setLoading] = useState(false);
   const [confirmationResult, setConfirmationResult] = useState<any>(null);
   const router = useRouter();
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.push("/dashboard");
+    }
+  }, [user, authLoading, router]);
 
   const setupRecaptcha = () => {
     if (!(window as any).recaptchaVerifier) {
@@ -104,6 +114,16 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
+
+  // Show loading spinner while checking auth state or if already logged in
+  if (authLoading || user) {
+    return (
+      <div className="min-h-screen bg-black">
+        <Navbar />
+        <LoadingSpinner message="Redirecting to dashboard..." />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black">
